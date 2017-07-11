@@ -1,0 +1,27 @@
+<div>
+  <p>
+    Все группы:
+  </p>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Группа</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let group of groups">
+      <th scope=row>{{group.id}}</th>
+      <td>{{group.name}}</td>
+      <td>
+        <a (click)="onDelete(group.id)">Удалить</a>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+
+</div>
