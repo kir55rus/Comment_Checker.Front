@@ -6,12 +6,8 @@ import {BaseService} from "./base.service";
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class SettingsService extends BaseService implements OnInit {
-  private url: string;
-
-  ngOnInit(): void {
-    this.url = this.baseUrl + '/settings';
-  }
+export class SettingsService extends BaseService {
+  private url: string = this.baseUrl + '/settings';
 
   getSettings(): Promise<Settings[]> {
     return this.http.get(this.url)

@@ -3,7 +3,7 @@ import {Http, Response} from "@angular/http";
 
 @Injectable()
 export class BaseService {
-  protected baseUrl = '/rest';
+  protected baseUrl: string = '/rest';
 
   constructor(
     protected http: Http
