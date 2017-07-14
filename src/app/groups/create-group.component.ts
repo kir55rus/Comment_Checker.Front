@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Group} from "../group";
 import {Http} from "@angular/http";
 import {GroupsService} from "../services/groups.service";
@@ -7,8 +7,12 @@ import {GroupsService} from "../services/groups.service";
   templateUrl: './create-group.component.html'
 })
 export class CreateGroupComponent {
+  @Input()
+  groups: Group[];
+
   @Output()
-  groupCreated = new EventEmitter<Group>();
+  groupsChange = new EventEmitter<Group[]>();
+
   groupName: string;
 
   constructor(private groupsService: GroupsService) {}
@@ -16,7 +20,8 @@ export class CreateGroupComponent {
   onSubmit(): void {
     this.groupsService.createGroup(this.groupName)
       .then(group => {
-        this.groupCreated.next(group);
+        this.groups.push(group);
+        this.groupsChange.emit(this.groups);
         this.groupName = null;
       })
       .catch(error => console.log(error));

@@ -3,8 +3,8 @@
 </div>
 <hr>
 
-<create-group (groupCreated)="onGroupCreated($event)"></create-group>
+<create-group [(groups)]="groups"></create-group>
 
 <hr>
 
-<groups-list [groups]="groups" (groupDeleted)="onGroupDeleted($event)"></groups-list>
+<groups-list [(groups)]="groups"></groups-list>

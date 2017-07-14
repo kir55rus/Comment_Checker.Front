@@ -28,11 +28,4 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  onGroupCreated(newGroup: Group): void {
-    this.groups.push(newGroup);
-  }
-
-  onGroupDeleted(id: number): void {
-    this.groups = this.groups.filter(group => group.id !== id);
-  }
 }

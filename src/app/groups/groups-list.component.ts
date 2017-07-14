@@ -11,7 +11,7 @@ export class GroupsListComponent {
   groups: Group[];
 
   @Output()
-  groupDeleted = new EventEmitter<number>();
+  groupsChange = new EventEmitter<Group[]>();
 
   constructor(private groupsService: GroupsService) {}
 
@@ -21,7 +21,9 @@ export class GroupsListComponent {
     }
 
     this.groupsService.deleteGroup(id)
-      .then(res => this.groupDeleted.next(id))
+      .then(res => {
+        this.groupsChange.emit(this.groups.filter(g => g.id != id));
+      })
       .catch(error => console.log(error)); //todo: replace
   }
 }
