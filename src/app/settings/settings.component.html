@@ -42,7 +42,14 @@
       <span *ngIf="formErrors.period" class="help-block">{{formErrors.period}}</span>
     </div>
 
-    <button type="submit" class="btn btn-default" [disabled]="!settingsForm.valid">Сохранить</button>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default" [disabled]="!settingsForm.valid">Сохранить</button>
+    </div>
+
+    <div class="form-group" *ngIf="lastSaving">
+      <div *ngIf="isSuccessSaving">Сохранено: <span>{{lastSaving | date: 'medium'}}</span></div>
+      <div *ngIf="!isSuccessSaving">Ошибка сохранения</div>
+    </div>
   </form>
 
 </div>

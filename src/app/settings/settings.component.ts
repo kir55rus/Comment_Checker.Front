@@ -50,6 +50,9 @@ export class SettingsComponent implements OnInit {
     'period': null,
   };
 
+  lastSaving: Date;
+  isSuccessSaving: boolean;
+
   constructor(
     private settingsService: SettingsService,
     private formBuilder: FormBuilder
@@ -87,10 +90,16 @@ export class SettingsComponent implements OnInit {
             this.data[field].value = "";
           }
           this.settingsForm.controls[field].setValue(this.data[field].value);
+
+          this.lastSaving = new Date();
+          this.isSuccessSaving = true;
         })
         .catch(error => {
           this.data[field].value = oldValue;
-          console.log(error)
+          console.log(error);
+
+          this.lastSaving = new Date();
+          this.isSuccessSaving = false;
         });
     }
   }

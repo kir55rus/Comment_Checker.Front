@@ -18,7 +18,7 @@ export class CreateGroupComponent {
   constructor(private groupsService: GroupsService) {}
 
   onSubmit(): void {
-    this.groupsService.createGroup(this.groupName)
+    this.groupsService.createGroup(this.groupName.trim())
       .then(group => {
         this.groups.push(group);
         this.groupsChange.emit(this.groups);
