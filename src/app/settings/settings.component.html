@@ -1,0 +1,48 @@
+<div>
+  <h1>Настройки</h1>
+</div>
+
+<hr>
+<div>
+  <form *ngIf="settingsForm" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group" [class.has-error]="formErrors.depth">
+      <label for="depthLabel">Глубина</label>
+      <input type="number" formControlName="depth" class="form-control" id="depthLabel" placeholder="Глубина поиска megaindex">
+      <span *ngIf="formErrors.depth" class="help-block">{{formErrors.depth}}</span>
+    </div>
+
+    <div class="form-group" [class.has-error]="formErrors.weight">
+      <label for="weightLabel">Веса</label>
+      <input type="text" formControlName="weight" class="form-control" id="weightLabel" placeholder="[32.5, 17.6, 11.4, 8.1, 6.1, 4.4, 3.5, 3.3, 2.9, 1.9, 0.5]">
+      <span *ngIf="formErrors.weight" class="help-block">{{formErrors.weight}}</span>
+    </div>
+
+    <div class="form-group" [class.has-error]="formErrors.email">
+      <label for="emailLabel">Email megaindex</label>
+      <input type="email" formControlName="email" class="form-control" id="emailLabel" placeholder="name@email.com">
+      <span *ngIf="formErrors.email" class="help-block">{{formErrors.email}}</span>
+    </div>
+
+    <div class="form-group" [class.has-error]="formErrors.password">
+      <label for="passwordLabel">Пароль megaindex</label>
+      <input type="password" formControlName="password" class="form-control" id="passwordLabel" placeholder="Password">
+      <span *ngIf="formErrors.password" class="help-block">{{formErrors.password}}</span>
+    </div>
+
+    <div class="form-group" [class.has-error]="formErrors.percent">
+      <label for="percentLabel">Минимальный процент соответствия</label>
+      <input type="number" formControlName="percent" class="form-control" id="percentLabel" placeholder="Минимальный процент соответствия, при котором текст считается одинаковым">
+      <span *ngIf="formErrors.percent" class="help-block">{{formErrors.percent}}</span>
+    </div>
+
+    <div class="form-group" [class.has-error]="formErrors.period">
+      <label for="periodLabel">Период проверок комментариев (сек.)</label>
+      <input type="number" formControlName="period" class="form-control" id="periodLabel" placeholder="В секундах">
+      <span *ngIf="formErrors.period" class="help-block">{{formErrors.period}}</span>
+    </div>
+
+    <button type="submit" class="btn btn-default" [disabled]="!settingsForm.valid">Сохранить</button>
+  </form>
+
+</div>

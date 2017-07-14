@@ -9,6 +9,7 @@ import {GroupsModule} from "./groups/groups.module";
 import {HttpModule} from "@angular/http";
 import {ErrorComponent} from "./error.component";
 import {FormsModule} from "@angular/forms";
+import {SettingsModule} from "./settings/settings.module";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {FormsModule} from "@angular/forms";
     BrowserModule,
     KeywordsModule,
     GroupsModule,
+    SettingsModule,
     AppRoutingModule,
     HttpModule
   ],
