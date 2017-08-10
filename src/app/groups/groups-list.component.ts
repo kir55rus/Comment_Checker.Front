@@ -13,6 +13,8 @@ export class GroupsListComponent {
   @Output()
   groupsChange = new EventEmitter<Group[]>();
 
+  errors: Error[];
+
   constructor(private groupsService: GroupsService) {}
 
   onDelete(id: number): void {
@@ -24,6 +26,6 @@ export class GroupsListComponent {
       .then(res => {
         this.groupsChange.emit(this.groups.filter(g => g.id != id));
       })
-      .catch(error => console.log(error)); //todo: replace
+      .catch(error => this.errors = error);
   }
 }

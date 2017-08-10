@@ -9,8 +9,12 @@
       <label for="groupLabel">Название</label>
       <input type="text" [(ngModel)]="groupName" name="groupName" class="form-control" id="groupLabel" placeholder="Навание группы">
     </div>
-    <button type="submit" class="btn btn-default">Добавить</button>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default">Добавить</button>
+    </div>
     </form>
   </div>
 
 </div>
+
+<error-alert [errors]="errors" [title]="'Ошибка создания группы'"></error-alert>

@@ -14,6 +14,7 @@ export class CreateGroupComponent {
   groupsChange = new EventEmitter<Group[]>();
 
   groupName: string;
+  errors: Error[];
 
   constructor(private groupsService: GroupsService) {}
 
@@ -24,6 +25,6 @@ export class CreateGroupComponent {
         this.groupsChange.emit(this.groups);
         this.groupName = null;
       })
-      .catch(error => console.log(error));
+      .catch(error => this.errors = error);
   }
 }

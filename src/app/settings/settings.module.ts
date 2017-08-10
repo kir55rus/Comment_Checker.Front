@@ -4,6 +4,8 @@ import {Route, RouterModule} from "@angular/router";
 import {SettingsService} from "../services/settings.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
+import {ErrorComponent} from "../error/error.component";
+import {ErrorModule} from "../error/error.module";
 
 const settingsRoutes: Route[] = [
   {
@@ -16,7 +18,8 @@ const settingsRoutes: Route[] = [
   imports: [
     RouterModule.forChild(settingsRoutes),
     ReactiveFormsModule,
-    BrowserModule
+    BrowserModule,
+    ErrorModule
   ],
   declarations: [
     SettingsComponent

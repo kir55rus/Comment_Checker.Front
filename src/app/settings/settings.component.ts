@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {SettingsService} from "../services/settings.service";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Settings} from "../settings";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   templateUrl: './settings.component.html'
@@ -52,14 +53,16 @@ export class SettingsComponent implements OnInit {
 
   lastSaving: Date;
   isSuccessSaving: boolean;
+  serviceError: any;
 
-  constructor(
-    private settingsService: SettingsService,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private settingsService: SettingsService,
+              private formBuilder: FormBuilder,
+              private titleService: Title) {}
 
 
   ngOnInit(): void {
+    this.titleService.setTitle('Настройки');
+
     this.settingsService.getSettings()
       .then(settings => {
         for(let val of settings) {
@@ -72,7 +75,7 @@ export class SettingsComponent implements OnInit {
 
         this.buildForm();
       })
-      .catch(error => console.log(error));
+      .catch(error => this.serviceError = error);
   }
 
   onSubmit(): void {
@@ -96,7 +99,7 @@ export class SettingsComponent implements OnInit {
         })
         .catch(error => {
           this.data[field].value = oldValue;
-          console.log(error);
+          this.serviceError = error;
 
           this.lastSaving = new Date();
           this.isSuccessSaving = false;

@@ -11,10 +11,18 @@ export class BaseService {
 
   protected extractData(res: Response) {
     let body = res.json();
-    return body.data || {};
+    console.log(body);
+    return body || {};
   }
 
-  protected handleError(error: any) {
-    return Promise.reject(new Error(error.statusText || error.toString()));
+  protected handleError(errors: Response) {
+    console.error(errors);
+    let error;
+    try {
+      error = errors.json().errors;
+    } catch (e) {
+      error = [{message: 'Внутренняя ошибка сервера'}];
+    }
+    return Promise.reject(error);
   }
 }

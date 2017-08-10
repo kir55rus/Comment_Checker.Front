@@ -6,6 +6,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {GroupsListComponent} from "./groups-list.component";
 import {CreateGroupComponent} from "./create-group.component";
 import {FormsModule} from "@angular/forms";
+import {ErrorModule} from "../error/error.module";
 
 const groupsRoutes: Routes = [
   {
@@ -18,7 +19,8 @@ const groupsRoutes: Routes = [
   imports: [
     RouterModule.forChild(groupsRoutes),
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ErrorModule
   ],
   declarations: [
     GroupsComponent,

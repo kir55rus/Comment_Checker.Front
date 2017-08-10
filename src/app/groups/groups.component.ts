@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 })
 export class GroupsComponent implements OnInit {
   groups: Group[];
-  error: string;
+  errors: Error[];
 
   constructor(
     private titleService: Title,
@@ -23,8 +23,7 @@ export class GroupsComponent implements OnInit {
     this.groupsService.getGroups()
       .then(groups => this.groups = groups)
       .catch(error => {
-        this.error = <any>error;
-        this.router.navigate([{outlets: {error: ['error']}}]);
+        this.errors = error;
     });
   }
 

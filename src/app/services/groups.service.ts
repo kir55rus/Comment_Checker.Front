@@ -30,7 +30,7 @@ export class GroupsService extends BaseService {
   deleteGroup(id: number): Promise<void> {
     return this.http.delete(this.url + '/' +  id)
       .toPromise()
-      .then(this.extractData)
+      .then(e => {return;})
       .catch(this.handleError);
   }
 }

@@ -7,4 +7,6 @@
 
 <hr>
 
-<groups-list [(groups)]="groups"></groups-list>
+<groups-list [(groups)]="groups" *ngIf="!errors"></groups-list>
+
+<error-alert [errors]="errors" [title]="'Ошибка получения списка групп'"></error-alert>

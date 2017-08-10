@@ -1,0 +1,20 @@
+<div class="container">
+
+  <div>
+    <h1>Ключевые слова</h1>
+  </div>
+  <hr>
+
+  <add-search-queries *ngIf="!groupsError"></add-search-queries>
+
+  <error-alert [title]="'Ошибка получения списка групп'" [errors]="groupsError"></error-alert>
+
+  <hr>
+
+  <search-queries-list *ngIf="!groupsError && !queriesError"
+                       [(searchQueries)]="searchQueries"
+                       [groups]="groups"></search-queries-list>
+
+  <error-alert [title]="'Ошибка получения списка запросов'" [errors]="queriesError"></error-alert>
+
+</div>
