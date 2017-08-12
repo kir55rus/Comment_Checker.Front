@@ -17,14 +17,14 @@ export class GroupsListComponent {
 
   constructor(private groupsService: GroupsService) {}
 
-  onDelete(id: number): void {
+  onDelete(group: Group): void {
     if(!confirm('Уверены? Все ссылки и ключевые слова будут удалены')) {
       return;
     }
 
-    this.groupsService.deleteGroup(id)
+    this.groupsService.deleteGroup(group.id)
       .then(res => {
-        this.groupsChange.emit(this.groups.filter(g => g.id != id));
+        this.groupsChange.emit(this.groups.filter(g => g.id != group.id));
       })
       .catch(error => this.errors = error);
   }
