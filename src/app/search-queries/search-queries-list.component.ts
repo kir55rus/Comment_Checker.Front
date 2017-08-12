@@ -2,42 +2,38 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {SearchQuery} from "../search-query";
 import {Group} from "../group";
 import {isUndefined} from "util";
+import {SearchQueriesService} from "../services/search-queries.service";
 @Component({
   selector: 'search-queries-list',
   templateUrl: './search-queries-list.component.html',
 })
-export class SearchQueriesListComponent implements OnChanges{
+export class SearchQueriesListComponent implements OnInit {
   @Input()
+  groups: Group[];
+
   searchQueries: SearchQuery[];
-  @Input('groups')
-  groupsList: Group[] = [];
+  queriesError: Error[];
 
-  @Output()
-  searchQueriesChange = new EventEmitter<SearchQuery[]>();
-
-  groups: Map<number, Group> = new Map<number, Group>();
   errors: Error[];
 
-  constructor() {}
+  constructor(private queriesService: SearchQueriesService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.groupsList == null) {
-      return;
-    }
-    for(let group of this.groupsList) {
-      this.groups[group.id] = group;
-    }
+  ngOnInit(): void {
+    this.queriesService.getSearchQueries()
+      .then(data => this.searchQueries = data)
+      .catch(error => this.queriesError = error);
   }
 
-  deleteQuery(id: number): void {
+  deleteQuery(query: SearchQuery): void {
     //todo
   }
 
-  showQueriesForGroup(id: number): void {
+  showQueriesForGroup(group: Group): void {
+    console.log(group);
     //todo
   }
 
-  gotoSearhQuery(id: number): void {
+  gotoSearhQuery(query: SearchQuery): void {
     //todo
   }
 }

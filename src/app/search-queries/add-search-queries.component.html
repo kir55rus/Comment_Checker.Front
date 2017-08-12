@@ -2,32 +2,64 @@
   <p>
     Добавить новое:
   </p>
-  <form #queryForm="ngForm">
-    <input type="hidden" name="count" value="single">
-    <div class="form-group">
+  <form #queryForm="ngForm" (ngSubmit)="onSubmitSingle()">
+    <div class="form-group" [class.has-error]="searchQuery.invalid && searchQuery.touched">
       <label for="keywordLabel">Ключевое слово</label>
-      <input type="text" name="keyword" class="form-control" id="keywordLabel" placeholder="Ключеое слово">
+      <input type="text"
+             [(ngModel)]="searchQueryModel.searchQuery"
+             name="searchQuery"
+             class="form-control"
+             id="keywordLabel"
+             required
+             maxlength="200"
+             minlength="1"
+             placeholder="Ключеое слово"
+             #searchQuery="ngModel">
+      <span class="help-block" *ngIf="searchQuery.invalid && searchQuery.touched">Обязательное поле</span>
     </div>
-    <div class="form-group">
+    <div class="form-group" [class.has-error]="frequency.invalid && frequency.touched">
       <label for="frequencyLabel">Частотность</label>
-      <input type="text" name="frequency" class="form-control" id="frequencyLabel" placeholder="Частотность">
+      <input type="number"
+             [(ngModel)]="searchQueryModel.frequency"
+             name="frequency"
+             class="form-control"
+             id="frequencyLabel"
+             required
+             min="0"
+             placeholder="Частотность"
+             #frequency="ngModel">
+      <span class="help-block" *ngIf="frequency.invalid && frequency.touched">Должна быть больше 0</span>
     </div>
 
-    <p>Или сразу несколько:</p>
+    <!--<p>Или сразу несколько:</p>-->
 
-    <input type="hidden" name="MAX_FILE_SIZE" value="300000000">
-    <div class="form-group">
-      <label for="keywordsFile">Csv таблица с данными</label>
-      <input type="file" id="keywordsFile" name="keywordsFile">
-      <p class="help-block">Запрос в первом столбце, частота во втором столбце</p>
-    </div>
+    <!--<input type="hidden" name="MAX_FILE_SIZE" value="300000000">-->
+    <!--<div class="form-group">-->
+      <!--<label for="keywordsFile">Csv таблица с данными</label>-->
+      <!--<input type="file" id="keywordsFile" name="keywordsFile">-->
+      <!--<p class="help-block">Запрос в первом столбце, частота во втором столбце</p>-->
+    <!--</div>-->
 
-    <div class="form-group">
-      <label for="sel1">Группа:</label>
-      <select class="form-control" id="sel1" name="groupId">
-        <option value="">$name</option>
+    <div class="form-group" [class.has-error]="group.invalid && group.touched">
+      <label for="group">Группа:</label>
+      <select class="form-control"
+              [(ngModel)]="searchQueryModel.group"
+              required
+              id="group"
+              name="group"
+              #group="ngModel">
+        <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
       </select>
+      <span class="help-block" *ngIf="group.invalid && group.touched">Обязательное поле</span>
     </div>
-    <button type="submit" class="btn btn-default">Добавить</button>
+    <div class="form-group">
+      <button
+        class="btn btn-default"
+        [disabled]="!queryForm.form.valid">Добавить</button>
+      {{status}}
+    </div>
+
+    <error-alert [title]="'Ошибка добавления'" [errors]="errors"></error-alert>
+
   </form>
 </div>

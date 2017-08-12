@@ -1,13 +1,24 @@
 import {Injectable} from "@angular/core";
-import {Http, Response} from "@angular/http";
+import {Http, RequestOptions, Response, Headers} from "@angular/http";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class BaseService {
-  protected baseUrl: string = '/rest';
+  protected baseUrl: string = environment.apiUrl;
+  protected baseRequestOptions: RequestOptions;
 
   constructor(
     protected http: Http
-  ) {}
+  ) {
+    this.init();
+  }
+
+  private init(): void {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+    });
+    this.baseRequestOptions = new RequestOptions({ headers: headers });
+  }
 
   protected extractData(res: Response) {
     let body = res.json();

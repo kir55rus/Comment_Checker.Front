@@ -5,16 +5,12 @@
   </div>
   <hr>
 
-  <add-search-queries *ngIf="!groupsError"></add-search-queries>
+  <add-search-queries *ngIf="!groupsError" [groups]="groups"></add-search-queries>
 
   <error-alert [title]="'Ошибка получения списка групп'" [errors]="groupsError"></error-alert>
 
   <hr>
 
-  <search-queries-list *ngIf="!groupsError && !queriesError"
-                       [(searchQueries)]="searchQueries"
-                       [groups]="groups"></search-queries-list>
-
-  <error-alert [title]="'Ошибка получения списка запросов'" [errors]="queriesError"></error-alert>
+  <search-queries-list *ngIf="!groupsError" [groups]="groups"></search-queries-list>
 
 </div>

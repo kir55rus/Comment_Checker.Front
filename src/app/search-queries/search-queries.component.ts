@@ -8,9 +8,7 @@ import {GroupsService} from "../services/groups.service";
   templateUrl: './search-queries.component.html',
 })
 export class SearchQueriesComponent implements OnInit{
-  searchQueries: SearchQuery[];
   groups: Group[];
-  queriesError: Error[];
   groupsError: Error[];
 
   constructor(private queriesService: SearchQueriesService,
@@ -19,10 +17,6 @@ export class SearchQueriesComponent implements OnInit{
 
   public ngOnInit(): void {
     this.titleService.setTitle('Ключевые слова');
-
-    this.queriesService.getSearchQueries()
-      .then(data => this.searchQueries = data)
-      .catch(error => this.queriesError = error);
 
     this.groupService.getGroups()
       .then(data => this.groups = data)

@@ -17,10 +17,7 @@ export class SettingsService extends BaseService {
   }
 
   updateSettings(settings: Settings): Promise<Settings> {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-
-    return this.http.put(this.url + '/' + settings.id, settings, options)
+    return this.http.put(this.url + '/' + settings.id, settings, this.baseRequestOptions)
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

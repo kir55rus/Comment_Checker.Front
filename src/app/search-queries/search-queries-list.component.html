@@ -1,47 +1,55 @@
-<div>
+<div *ngIf="!queriesError">
   <div>
-    <form class="form-inline">
-      <div class="form-group">
-        <label for="sel1">Последние ключевые слова для группы:</label>
-        <select class="form-control" id="sel1" name="groupId">
-          <option value="0">Все группы</option>
-        </select>
-      </div>
-    </form>
+    <div>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="sel1">Последние ключевые слова для группы:</label>
+          <select class="form-control"
+                  id="sel1"
+                  #groupSelect
+                  (change)="showQueriesForGroup(groupSelect.selectedIndex > 0 ? groups[groupSelect.selectedIndex - 1] : null)">
+            <option [ngValue]="null">Все группы</option>
+            <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Ключевое слово</th>
+        <th>Частотность</th>
+        <th>Группа</th>
+        <th>Яндекс</th>
+        <th>Гугл</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let query of searchQueries">
+        <th scope=row>{{query.id}}</th>
+        <td><a (click)="gotoSearhQuery(query)">{{query.searchQuery}}</a></td>
+        <td>{{query.frequency}}</td>
+        <td><a (click)="showQueriesForGroup(query.group)">{{query.group.name}}</a></td>
+        <td>{{query.yandexChecked}}</td>
+        <td>{{query.googleChecked}}</td>
+        <td><a (click)="deleteQuery(query)">Удалить</a></td>
+      </tr>
+
+      </tbody>
+    </table>
   </div>
 
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Ключевое слово</th>
-      <th>Частотность</th>
-      <th>Группа</th>
-      <th>Яндекс</th>
-      <th>Гугл</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <tr *ngFor="let query of searchQueries">
-      <th scope=row>{{query.id}}</th>
-      <td><a (click)="gotoSearhQuery(query.id)">{{query.searchQuery}}</a></td>
-      <td>{{query.frequency}}</td>
-      <td><a (click)="showQueriesForGroup(query.groupId)">{{groups[query.groupId].name}}</a></td>
-      <td>{{query.yandexChecked}}</td>
-      <td>{{query.googleChecked}}</td>
-      <td><a (click)="deleteQuery(query.id)">Удалить</a></td>
-    </tr>
-
-    </tbody>
-  </table>
+  <div align="center">
+    <ul class="pagination pagination-lg">
+      <li><a href="?$href">Первая</a> </li>
+      <li class="active"><a href="?$href">$i</a></li>
+      <li><a href="?$href">Последняя</a> </li>
+    </ul>
+  </div>
 </div>
 
-<div align="center">
-  <ul class="pagination pagination-lg">
-    <li><a href="?$href">Первая</a> </li>
-    <li class="active"><a href="?$href">$i</a></li>
-    <li><a href="?$href">Последняя</a> </li>
-  </ul>
-</div>
+<error-alert [title]="'Ошибка получения списка запросов'" [errors]="queriesError"></error-alert>
