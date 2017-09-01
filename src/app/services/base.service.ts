@@ -1,6 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Http, RequestOptions, Response, Headers} from "@angular/http";
-import {environment} from "../../environments/environment";
+import {Injectable} from '@angular/core';
+import {Http, RequestOptions, Response, Headers} from '@angular/http';
+import {environment} from '../../environments/environment';
+import {PageableResult} from '../pageable-result';
 
 @Injectable()
 export class BaseService {
@@ -14,16 +15,31 @@ export class BaseService {
   }
 
   private init(): void {
-    let headers = new Headers({
+    const headers = new Headers({
       'Content-Type': 'application/json',
     });
     this.baseRequestOptions = new RequestOptions({ headers: headers });
   }
 
   protected extractData(res: Response) {
-    let body = res.json();
-    console.log(body);
+    const body = res.json();
     return body || {};
+  }
+
+  protected extractPageableData(res: Response): PageableResult<any> {
+    const totalCount = +res.headers.get('X-Total-Count');
+    const totalPages = +res.headers.get('X-Total-Pages');
+    const pageSize = +res.headers.get('X-Page-Size');
+    const currentPage = +res.headers.get('X-Current-Page');
+
+    const body = res.json();
+    return {
+      result: body,
+      totalCount: totalCount,
+      totalPages: totalPages,
+      pageSize: pageSize,
+      currentPage: currentPage
+    };
   }
 
   protected handleError(errors: Response) {

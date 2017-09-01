@@ -7,7 +7,7 @@
           <select class="form-control"
                   id="sel1"
                   #groupSelect
-                  (change)="showQueriesForGroup(groupSelect.selectedIndex > 0 ? groups[groupSelect.selectedIndex - 1] : null)">
+                  (change)="showQueries(groupSelect.selectedIndex > 0 ? groups[groupSelect.selectedIndex - 1] : null)">
             <option [ngValue]="null">Все группы</option>
             <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
           </select>
@@ -33,7 +33,7 @@
         <th scope=row>{{query.id}}</th>
         <td><a (click)="gotoSearhQuery(query)">{{query.searchQuery}}</a></td>
         <td>{{query.frequency}}</td>
-        <td><a (click)="showQueriesForGroup(query.group)">{{query.group.name}}</a></td>
+        <td><a (click)="showQueries(query.group)">{{query.group.name}}</a></td>
         <td>{{query.yandexChecked}}</td>
         <td>{{query.googleChecked}}</td>
         <td><a (click)="deleteQuery(query)">Удалить</a></td>
@@ -45,9 +45,9 @@
 
   <div align="center">
     <ul class="pagination pagination-lg">
-      <li><a href="?$href">Первая</a> </li>
-      <li class="active"><a href="?$href">$i</a></li>
-      <li><a href="?$href">Последняя</a> </li>
+      <li *ngIf="currentPage != 0"><a href="?$href">Первая</a> </li>
+      <li *ngFor="let page of pages" class="active"><a href="?$href">{{page}}</a></li>
+      <li *ngIf="currentPage != (totalPages - 1)"><a href="?$href">Последняя</a> </li>
     </ul>
   </div>
 </div>

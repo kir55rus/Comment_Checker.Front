@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: "/rest"
+  apiUrl: '/rest'
 };

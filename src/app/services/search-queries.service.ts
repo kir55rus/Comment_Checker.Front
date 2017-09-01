@@ -2,14 +2,24 @@ import {BaseService} from "./base.service";
 import {SearchQuery} from "../search-query";
 
 import 'rxjs/add/operator/toPromise';
+import {Group} from "../group";
+import {PageableResult} from "../pageable-result";
 
 export class SearchQueriesService extends BaseService {
   private url: string = this.baseUrl + '/search-queries';
 
-  getSearchQueries(): Promise<SearchQuery[]> {
-    return this.http.get(this.url)
+  getSearchQueries(group?: Group, page?: number): Promise<PageableResult<SearchQuery[]>> {
+    let url = this.url;
+    if (group) {
+      url += '/group/' + group.id;
+    }
+    if (page) {
+      url += '?page=' + page;
+    }
+
+    return this.http.get(url)
       .toPromise()
-      .then(this.extractData)
+      .then(this.extractPageableData)
       .catch(this.handleError);
   }
 
@@ -18,6 +28,13 @@ export class SearchQueriesService extends BaseService {
     return this.http.post(this.url, body,this.baseRequestOptions)
       .toPromise()
       .then(this.extractData)
+      .catch(this.handleError);
+  }
+
+  delSearchQuery(query: SearchQuery): Promise<void> {
+    return this.http.delete(this.url + '/' +  query.id)
+      .toPromise()
+      .then(e => {return; })
       .catch(this.handleError);
   }
 }
